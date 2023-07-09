@@ -21,17 +21,17 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<List<UploadedYugiohCard>> getAllCards() {
         return ResponseEntity.ok(cardService.findAll());
     }
 
-    @GetMapping("/{cardName}")
-    public ResponseEntity<List<UploadedYugiohCard>> getAllCardsByName(@PathVariable String cardName) {
+    @GetMapping("/searchByCardName")
+    public ResponseEntity<List<UploadedYugiohCard>> getAllCardsByName(@RequestParam String cardName) {
         return ResponseEntity.ok(cardService.findAllByCardName(cardName));
     }
 
-    @GetMapping("/")
+    @GetMapping("/searchByCreatorName")
     public ResponseEntity<List<UploadedYugiohCard>> getAllCardsByCreatorName(@RequestParam String creatorName) {
         return ResponseEntity.ok(cardService.findAllByCreatorName(creatorName));
     }
