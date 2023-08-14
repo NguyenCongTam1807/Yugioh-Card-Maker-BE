@@ -35,12 +35,12 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public UploadedYugiohCard uploadCard(YugiohCard card) {
+    public void uploadCard(YugiohCard card) {
         UploadedYugiohCard uploadedCard = new UploadedYugiohCard();
         uploadedCard.setId(UUID.randomUUID().toString());
         uploadedCard.setUploadedAt(System.currentTimeMillis());
         BeanUtils.copyProperties(card, uploadedCard);
-        return cardRepository.save(uploadedCard);
+        cardRepository.save(uploadedCard);
     }
 
     @Override

@@ -9,6 +9,6 @@ public interface CardService {
     List<UploadedYugiohCard> findAll();
     List<UploadedYugiohCard> findAllByCardName(String cardName);
     List<UploadedYugiohCard> findAllByCreatorName(String creatorName);
-    UploadedYugiohCard uploadCard(YugiohCard card);
+    void uploadCard(YugiohCard card);
     void deleteCard(String id);
 }
