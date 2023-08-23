@@ -35,7 +35,7 @@ public class CardController {
         return ResponseEntity.ok(cardService.findAllByCreatorName(creatorName));
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<Void> uploadCard(@RequestBody YugiohCard card) {
         cardService.uploadCard(card);
         return ResponseEntity.ok().build();
