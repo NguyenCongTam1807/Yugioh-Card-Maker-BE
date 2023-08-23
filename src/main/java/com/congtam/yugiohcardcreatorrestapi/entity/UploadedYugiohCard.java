@@ -55,6 +55,9 @@ public class UploadedYugiohCard {
     @Column(name = "link_arrows")
     private String linkArrows;
 
+    @Column(name = "storage_key")
+    private String storageKey;
+
     @Column(name = "uploaded_at")
     private long uploadedAt;
 }

@@ -4,8 +4,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Data
 @Setter
 @Getter
@@ -22,4 +20,5 @@ public class YugiohCard {
     private int level;
     private String effectType;
     private String linkArrows;
+    private String storageKey;
 }
