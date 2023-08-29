@@ -20,5 +20,6 @@ public class YugiohCard {
     private int level;
     private String effectType;
     private String linkArrows;
-    private String storageKey;
+    private String thumbnailUrl;
+    private String fullCardImageUrl;
 }
