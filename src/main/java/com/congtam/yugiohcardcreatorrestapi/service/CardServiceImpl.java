@@ -5,6 +5,8 @@ import com.congtam.yugiohcardcreatorrestapi.model.YugiohCard;
 import com.congtam.yugiohcardcreatorrestapi.repository.CardRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.UUID;
 
 @Service
 public class CardServiceImpl implements CardService{
-    private CardRepository cardRepository;
+    private final CardRepository cardRepository;
 
     @Autowired
     public CardServiceImpl(CardRepository cardRepository) {
@@ -20,18 +22,25 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public List<UploadedYugiohCard> findAll() {
-        return cardRepository.findAll();
+    public List<UploadedYugiohCard> findAll(Integer page, Integer size) {
+        if (page != null && size != null) {
+            Pageable paging = PageRequest.of(page, size);
+            return cardRepository.findAllByOrderByUploadedAtDesc(paging).toList();
+        } else {
+            return cardRepository.findAllByOrderByUploadedAtDesc();
+        }
     }
 
     @Override
-    public List<UploadedYugiohCard> findAllByCardName(String cardName) {
-        return cardRepository.findAllByNameContaining(cardName);
+    public List<UploadedYugiohCard> findAllByCardName(String cardName, Integer page, Integer size) {
+        Pageable paging = PageRequest.of(page, size);
+        return cardRepository.findAllByNameContaining(cardName, paging).toList();
     }
 
     @Override
-    public List<UploadedYugiohCard> findAllByCreatorName(String creatorName) {
-        return cardRepository.findAllByCreatorName(creatorName);
+    public List<UploadedYugiohCard> findAllByCreatorName(String creatorName, Integer page, Integer size) {
+        Pageable paging = PageRequest.of(page, size);
+        return cardRepository.findAllByCreatorName(creatorName, paging).toList();
     }
 
     @Override
