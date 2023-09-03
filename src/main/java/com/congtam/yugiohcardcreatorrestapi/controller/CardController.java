@@ -3,7 +3,10 @@ package com.congtam.yugiohcardcreatorrestapi.controller;
 import com.congtam.yugiohcardcreatorrestapi.entity.UploadedYugiohCard;
 import com.congtam.yugiohcardcreatorrestapi.model.YugiohCard;
 import com.congtam.yugiohcardcreatorrestapi.service.CardService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,25 +27,30 @@ public class CardController {
     }
 
     @GetMapping("")
-    @Pattern(regexp = "^[0-9]+$")
-    public ResponseEntity<List<UploadedYugiohCard>> getAllCards(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    public ResponseEntity<List<UploadedYugiohCard>> getAllCards(
+            @RequestParam(required = false) @Min(value = 0, message = "Invalid page number") Integer page,
+            @RequestParam(required = false) @PositiveOrZero(message = "Invalid page size") Integer size) {
         return ResponseEntity.ok(cardService.findAll(page, size));
     }
 
     @GetMapping("/searchByCardName")
     public ResponseEntity<List<UploadedYugiohCard>> getAllCardsByName(
-            @RequestParam String cardName, @RequestParam Integer page, @RequestParam Integer size) {
+            @RequestParam String cardName,
+            @RequestParam @PositiveOrZero(message = "Invalid page number") Integer page,
+            @RequestParam @PositiveOrZero(message = "Invalid page size") Integer size) {
         return ResponseEntity.ok(cardService.findAllByCardName(cardName, page, size));
     }
 
     @GetMapping("/searchByCreatorName")
     public ResponseEntity<List<UploadedYugiohCard>> getAllCardsByCreatorName(
-            @RequestParam String creatorName, @RequestParam Integer page, @RequestParam Integer size) {
+            @RequestParam String creatorName,
+            @RequestParam @PositiveOrZero(message = "Invalid page number") Integer page,
+            @RequestParam @PositiveOrZero(message = "Invalid page size") Integer size) {
         return ResponseEntity.ok(cardService.findAllByCreatorName(creatorName, page, size));
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> uploadCard(@RequestBody YugiohCard card) {
+    public ResponseEntity<Void> uploadCard(@Valid @RequestBody YugiohCard card) {
         cardService.uploadCard(card);
         return ResponseEntity.ok().build();
     }
